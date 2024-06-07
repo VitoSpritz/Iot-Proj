@@ -13,8 +13,8 @@
 #define BT_TXD_PIN 2
 #define BT_RXD_PIN 3
 #define BT_STATE_PIN 5
-#define ECHO_PIN 11     //da fare
-#define TRIGGER_PIN 12  //da fare
+#define ECHO_PIN 11
+#define TRIGGER_PIN 12
 #define BT_EVENT_CATCHER_TASK_PERIOD 100
 #define LOGGER_TASK_PERIOD 100
 #define PRODUCER_TASK_PERIOD 5000
@@ -40,7 +40,7 @@ void setup() {
     * farlo funzionare. Da testare con e senza json.
     */
 
-    ProducerTask* producerTask = new ProducerTask(bt);
+    ProducerTask* producerTask = new ProducerTask(bt, sonar);
     producerTask->init(PRODUCER_TASK_PERIOD);
 
     sched.init(SCHED_PERIOD);

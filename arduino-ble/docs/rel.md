@@ -35,3 +35,5 @@ Bisogna implementare il sensore di distanza, i quali file sono già presenti nel
 Ho importato i file del sonar, ma bisogna implementare la logica nel publisher (direi), quindi bisogna aggiungere il componente alla task `PublisherTask()`, modificando i sorgenti e creando le funzioni adeguate per la lettura (riferimenti nel task dello scorso esericizio `this->sonar->getDistance()`).
 
 Bisogna anche implementare il codice per trasformare il tutto in json e inviarlo al raspberry per farlo pubblicare, da controllare anche se si può fare direttamente solo dal raspberry. Da trasformare come oggetto il file arduinojson.
+
+Inserire il JsonFormatter nel ProducerTask.cpp.
