@@ -28,14 +28,13 @@ def onSubscribe(payload):
     client.loop_start()
 
     try:
-        while True:
             
-            # Pubblicazione dei dati sul topic MQTT
-            client.publish(MQTT_TOPIC, payload)
-            print(f"Dati pubblicati: {payload}")
-
-            # Attesa di 5 secondi prima di pubblicare nuovamente
-            time.sleep(5)
+        # Pubblicazione dei dati sul topic MQTT
+        client.publish(MQTT_TOPIC, payload)
+        print(f"Dati pubblicati: {payload}")
+        
+        # Attesa di 5 secondi prima di pubblicare nuovamente
+        time.sleep(5)
 
     except KeyboardInterrupt:
         print("Interruzione del programma")
@@ -90,7 +89,6 @@ class DataReceiver:
                 return data
 
 async def send_data(sock):
-    ts = time.time()
     sock.send(f"Recieved\n")
     await asyncio.sleep(5) # wait 5 seconds
 
@@ -105,8 +103,11 @@ async def main():
                 while True:
                     await send_data(sock)
                     toJson = await receiver.receive_data()
-                    json_object = json.loads(toJson)
-                    onSubscribe(json_object)
+                    try:
+                        json_object = json.loads(toJson)
+                        onSubscribe(json.dumps(json_object))
+                    except json.JSONDecodeError as e:
+                        print(f"Errore nel parsing del JSON: {e}")
             except KeyboardInterrupt:
                 print("Disconnected")
             finally:
