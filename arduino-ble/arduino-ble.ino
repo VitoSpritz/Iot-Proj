@@ -34,11 +34,7 @@ void setup() {
     LoggerTask* loggerTask = new LoggerTask(bt, serial);
     loggerTask->init(LOGGER_TASK_PERIOD);
 
-    Sonar *sonar = new SonarImpl(ECHO_PIN, TRIGGER_PIN); 
-    /*TODO
-    * aggiungere a producerTask il sonar modificando i sorgenti e utilizzandolo come messaggio, aggiungere il convertitore da int a json per
-    * farlo funzionare. Da testare con e senza json.
-    */
+    Sonar *sonar = new SonarImpl(ECHO_PIN, TRIGGER_PIN);
 
     ProducerTask* producerTask = new ProducerTask(bt, sonar);
     producerTask->init(PRODUCER_TASK_PERIOD);

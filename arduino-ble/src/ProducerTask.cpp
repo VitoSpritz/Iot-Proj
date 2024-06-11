@@ -10,6 +10,5 @@ void ProducerTask::tick() {
     if (msgService->isConnected()) {
         unsigned long data = millis();
         this->msgService->sendMsg(String("{ \"distance\":") + String(this->sonar->getDistance()) + " }");
-        // this->msgService->sendMsg(String("Arduino timestamp: ") + data + String(" valore del sensore: ") + String(this->sonar->getDistance()));
     }
 }

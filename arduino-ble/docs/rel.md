@@ -30,10 +30,4 @@ data-subscriber: Si sottoscrive al topic MQTT, aggiorna il suo stato con i dati 
 
 Come base per il progetto siamo partiti dall'esercizio bl-comm fornitoci per creare una connessione bluetooth tramite il sensore HC-05.
 
-Bisogna implementare il sensore di distanza, i quali file sono già presenti nello scorso progetto. Il bluetooth sembrerebbe funzionare ma bisogna controllare che si connette al raspberry :D.
-
-Ho importato i file del sonar, ma bisogna implementare la logica nel publisher (direi), quindi bisogna aggiungere il componente alla task `PublisherTask()`, modificando i sorgenti e creando le funzioni adeguate per la lettura (riferimenti nel task dello scorso esericizio `this->sonar->getDistance()`).
-
-Bisogna anche implementare il codice per trasformare il tutto in json e inviarlo al raspberry per farlo pubblicare, da controllare anche se si può fare direttamente solo dal raspberry. Da trasformare come oggetto il file arduinojson.
-
-Inserire il JsonFormatter nel ProducerTask.cpp.
+Come sensore di raccolta dati abbiamo utilizzato il *Sensore ad ultrasuoni* per prendere ed inviare dati tramite bluetooth al raspberry. Per utilizzarlo abbiamo dovuto modificare il codice sorgente della **ProducerTask**, dandogli come argomento anche il puntatore al *Sonar*. Per semplificare l'invio dei dati tra dispositivi abbiamo optato per formattare il messaggio inviato al raspberry in formato Json, così da poterlo modificare liberamente in seguito.
