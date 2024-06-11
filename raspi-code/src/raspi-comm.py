@@ -5,21 +5,13 @@ import json
 import time
 import paho.mqtt.client as mqtt
 
-MQTT_BROKER = "localhost"  # Sostituisci con l'indirizzo del tuo broker MQTT
+MQTT_BROKER = "localhost"
 MQTT_PORT = 1883
 MQTT_TOPIC = "data"
 
-# Funzione per connettersi al broker MQTT
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        print("Connesso al broker MQTT!")
-    else:
-        print(f"Errore di connessione. Codice: {rc}")
-        
 def onSubscribe(payload):
     # Creazione del client MQTT
     client = mqtt.Client()
-    client.on_connect = on_connect
 
     # Connessione al broker MQTT
     client.connect(MQTT_BROKER, MQTT_PORT, 60)
@@ -28,13 +20,9 @@ def onSubscribe(payload):
     client.loop_start()
 
     try:
-            
         # Pubblicazione dei dati sul topic MQTT
         client.publish(MQTT_TOPIC, payload)
         print(f"Dati pubblicati: {payload}")
-        
-        # Attesa di 5 secondi prima di pubblicare nuovamente
-        time.sleep(5)
 
     except KeyboardInterrupt:
         print("Interruzione del programma")
@@ -71,7 +59,6 @@ def connect_bluetooth(address):
         print(f"Failed to connect: {err}")
         return None
 
-
 class DataReceiver:
     def __init__(self, sock):
         self.buffer: str = ""
@@ -85,7 +72,7 @@ class DataReceiver:
             line, self.buffer = self.buffer.split('\n', 1)
             if line:
                 data = line.strip()
-                print(f"Received {data}")
+                #print(f"Received from arduino {data}")
                 return data
 
 async def send_data(sock):
@@ -96,7 +83,7 @@ async def main():
     device_name = 'HC-05'
     address = find_device(device_name)
     if address:
-        sock = connect_bluetooth(address)
+        sock = connect_bluetooth('98:D3:31:F6:44:5D')
         if sock:
             try:
                 receiver = DataReceiver(sock)
