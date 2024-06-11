@@ -75,8 +75,8 @@ class DataReceiver:
                 #print(f"Received from arduino {data}")
                 return data
 
-async def send_data(sock):
-    sock.send(f"Recieved\n")
+async def send_data(sock, data):
+    sock.send(f"Recieved {data}\n")
     await asyncio.sleep(5) # wait 5 seconds
 
 async def main():
@@ -88,8 +88,9 @@ async def main():
             try:
                 receiver = DataReceiver(sock)
                 while True:
-                    await send_data(sock)
+                    
                     toJson = await receiver.receive_data()
+                    await send_data(sock, toJson)
                     try:
                         json_object = json.loads(toJson)
                         onSubscribe(json.dumps(json_object))
