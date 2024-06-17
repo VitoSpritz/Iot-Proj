@@ -3,25 +3,24 @@ import asyncio
 import time
 import json
 import time
-import paho.mqtt.client as mqtt
-
-MQTT_BROKER = "localhost"
-MQTT_PORT = 1883
-MQTT_TOPIC = "data"
+import ssl
+from paho import mqtt
+import paho.mqtt.client as paho
+import paho.mqtt.publish as publish
 
 def onSubscribe(payload):
-    # Creazione del client MQTT
-    client = mqtt.Client()
-
-    # Connessione al broker MQTT
-    client.connect(MQTT_BROKER, MQTT_PORT, 60)
-
-    # Avvio del loop in background
-    client.loop_start()
+    
+    client = paho.Client(client_id = "", userdata = None, protocol = paho.MQTTv5)
+    # Abilita tls
+    client.tls_set(tls_version = mqtt.client.ssl.PROTOCOL_TLS)
+    # Impostare username e password
+    client.username_pw_set("vitopaolo", "rootPass1")
+    
+    client.connect("", 8883)
 
     try:
         # Pubblicazione dei dati sul topic MQTT
-        client.publish(MQTT_TOPIC, payload)
+        client.publish("data", payload = payload, qos = 1)
         print(f"Dati pubblicati: {payload}")
 
     except KeyboardInterrupt:

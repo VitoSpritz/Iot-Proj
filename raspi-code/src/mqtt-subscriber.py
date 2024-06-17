@@ -1,26 +1,18 @@
-import paho.mqtt.client as mqtt
-import json
-
-# Configurazione MQTT
-MQTT_BROKER = "localhost"
-MQTT_PORT = 1883
-MQTT_TOPIC = "data"
-
-def on_connect(client, userdata, flags, rc):
-    print(f"Connesso al broker MQTT con codice {rc}")
-    client.subscribe(MQTT_TOPIC)
+import paho.mqtt.client as paho
+from paho import mqtt
 
 def on_message(client, userdata, msg):
-    try:
-        data = json.loads(msg.payload.decode())
-        print(f"Dati aggiornati: {data}")
-    except json.JSONDecodeError:
-        print("Errore nel decodificare il messaggio MQTT")
+    print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))   
+    
+client = paho.Client(client_id = "", userdata = None, protocol = paho.MQTTv5)
+# Abilita tls
+client.tls_set(tls_version = mqtt.client.ssl.PROTOCOL_TLS)
+# Impostare username e password
+client.username_pw_set("subscriber", "subPass1")
 
-mqtt_client = mqtt.Client()
-mqtt_client.on_connect = on_connect
-mqtt_client.on_message = on_message
-mqtt_client.connect(MQTT_BROKER, MQTT_PORT, 60)
+client.on_message = on_message
 
-if __name__ == '__main__':
-    mqtt_client.loop_forever()
+client.connect("", 8883)
+client.subscribe("encyclopedia/#", qos=1)
+client.loop_forever()
+
