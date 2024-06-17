@@ -76,8 +76,8 @@ class DataReceiver:
                 return data
 
 async def send_data(sock):
-    sock.send(f"Recieved\n")
-    await asyncio.sleep(5) # wait 5 seconds
+    #sock.send(f"Recieved\n")
+    await asyncio.sleep(10) # wait 5 seconds
 
 async def main():
     device_name = 'HC-05'
@@ -91,6 +91,7 @@ async def main():
                     await send_data(sock)
                     toJson = await receiver.receive_data()
                     try:
+                        sock.send(f"Recieved {toJson}\n")
                         json_object = json.loads(toJson)
                         onSubscribe(json.dumps(json_object))
                     except json.JSONDecodeError as e:
