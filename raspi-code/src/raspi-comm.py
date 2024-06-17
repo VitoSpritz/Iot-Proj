@@ -16,8 +16,10 @@ def onSubscribe(payload):
     # Impostare username e password
     client.username_pw_set("vitopaolo", "rootPass1")
     
-    client.connect("", 8883)
+    client.connect("dfc1c3b30c4849f6bb3033da09ca3625.s1.eu.hivemq.cloud", 8883)
 
+    client.loop_start()
+    
     try:
         # Pubblicazione dei dati sul topic MQTT
         client.publish("data", payload = payload, qos = 1)
@@ -74,8 +76,8 @@ class DataReceiver:
                 #print(f"Received from arduino {data}")
                 return data
 
-async def send_data(sock, data):
-    sock.send(f"Recieved {data}\n")
+async def send_data(sock):
+     #sock.send(f"Recieved {data}\n")
     await asyncio.sleep(5) # wait 5 seconds
 
 async def main():
@@ -87,11 +89,11 @@ async def main():
             try:
                 receiver = DataReceiver(sock)
                 while True:
-                    
+                    await send_data(sock)
                     toJson = await receiver.receive_data()
-                    await send_data(sock, toJson)
                     try:
                         json_object = json.loads(toJson)
+                        sock.send(f"Recieved {toJson}\n")
                         onSubscribe(json.dumps(json_object))
                     except json.JSONDecodeError as e:
                         print(f"Errore nel parsing del JSON: {e}")
