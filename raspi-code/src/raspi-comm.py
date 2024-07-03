@@ -15,8 +15,8 @@ def onSubscribe(payload):
     client.tls_set(tls_version = mqtt.client.ssl.PROTOCOL_TLS)
     # Impostare username e password
     client.username_pw_set("vitopaolo", "rootPass1")
-    
-    client.connect("dfc1c3b30c4849f6bb3033da09ca3625.s1.eu.hivemq.cloud", 8883)
+    #Insert url here
+    client.connect("", 8883)
 
     client.loop_start()
     
@@ -77,7 +77,6 @@ class DataReceiver:
                 return data
 
 async def send_data(sock):
-     #sock.send(f"Recieved {data}\n")
     await asyncio.sleep(5) # wait 5 seconds
 
 async def main():

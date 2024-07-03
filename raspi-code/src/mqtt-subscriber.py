@@ -11,14 +11,13 @@ client.tls_set(tls_version = mqtt.client.ssl.PROTOCOL_TLS)
 client.username_pw_set("subscriber", "subPass1")
 
 client.on_message = on_message
-
-client.connect("dfc1c3b30c4849f6bb3033da09ca3625.s1.eu.hivemq.cloud", 8883)
-
-client.loop_forever()
+#Insert url here
+client.connect("", 8883)
 
 try:
     # Pubblicazione dei dati sul topic MQTT
     client.subscribe("data", qos=1)
+    client.loop_forever()
 
 except KeyboardInterrupt:
     print("Interruzione del programma")
