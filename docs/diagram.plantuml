@@ -1,0 +1,21 @@
+@startuml Data-flow
+
+hide empty description
+
+[*] -> Off
+
+Off --> On: Sensor starts to mesure
+
+On --> Transmitting: Transmitting data from arduino to raspberry
+
+Transmitting --> Receiving: Raspberry received data
+
+Receiving --> Publishing: Raspberry publishes data on MQTT
+
+Publishing --> MQTT: Stores data on a topic
+
+Subscriber --> MQTT: Subscribes to a topic
+
+On --> Off: Physically switching off the arduino
+
+@enduml
