@@ -2,9 +2,11 @@
 
 Due branch principali
 
-* Arduino branch dove si sviluppa solo arduino
-* Raspberry per sviluppare solo raspberry
-* Implementare la pagina web con ***streamlit*** ?
-Alla fine si mergia nel main
+* Arduino branch dove è presente codice arduino e relazione
+* Raspberry dove è presente codice raspberry e relazione
+* Implementata interfaccia web con libreria ***streamlit***, da installare con `pip install streamlit`
 
-Utilizzare un branch testing per fare opportune prove
+Si consiglia di utilizzare un ambiente venv python.
+Per utilizzare il publisher e subscriber sono necessari gli URL del broker.
+
+Utilizzare un branch testing per fare opportune prove.

@@ -14,7 +14,7 @@ def onSubscribe(payload):
     # Abilita tls
     client.tls_set(tls_version = mqtt.client.ssl.PROTOCOL_TLS)
     # Impostare username e password
-    client.username_pw_set("vitopaolo", "rootPass1")
+    client.username_pw_set("rootUser", "rootPass1")
     #Insert url here
     client.connect("", 8883)
 
