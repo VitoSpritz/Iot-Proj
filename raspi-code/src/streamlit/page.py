@@ -23,9 +23,13 @@ def on_message(client, userdata, msg):
 def subscribe():
     client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
     client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+    #Insert credentials here
     client.username_pw_set("subscriber", "subPass1")
+    
     client.on_message = on_message
-    client.connect("8ea59180f82845dda5325bc4b3beadf4.s1.eu.hivemq.cloud", 8883)
+    #Insert url here
+    client.connect("", 8883)
+    
     client.subscribe("data", qos=1)
     client.loop_start()
     st.session_state.client = client
@@ -45,10 +49,9 @@ def update_data():
     chart_placeholder.line_chart(st.session_state.df.set_index('Time'))
 
 if __name__ == "__main__":
-    st.title('MOQUITTO DALLA PARTITA')
+    st.title('DATI RACCOLTI')
     st.subheader('Dati raccolti da HiveMQ')
 
-    st.markdown("Una bella prova di **Markdown**")
     st.sidebar.markdown("# Main page 🎈")
 
     if 'client' not in st.session_state and st.button('Subscribe'):
